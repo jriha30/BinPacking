@@ -1,4 +1,3 @@
-from grpc import ServerCertificateConfiguration
 import Functions
 
 # Value = 0: use random scenario
