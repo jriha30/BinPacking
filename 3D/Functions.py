@@ -89,18 +89,22 @@ def DoScenario(Value, Size=10, ItemNumber=30):
 
     ListOfBins = []
     ListOfBins.append(deepcopy(Bin))
+
+    # ListOfBins.append(deepcopy(Bin))
+
     BinCounter = 0
     CurrentBin = ListOfBins[BinCounter]
     CurrentBin.BinNumber = BinCounter
     i = 0
     while(i < len(ListOfItems)):
-        ListOfItems[i].GetAllValues(CurrentBin)
+        ListOfItems[i].GetAllValues(ListOfBins)
         # Logging(ListOfItems[i], CurrentBin)
-        if(ListOfItems[i].ChooseLocation()):
-            CurrentBin.PlaceItem(ListOfItems[i])
+        Boolean, location = ListOfItems[i].ChooseLocation()
+        if(Boolean):
+            location[4].PlaceItem(ListOfItems[i])
             i += 1
         else:
-            CloseBin(CurrentBin)
+            # CloseBin(CurrentBin)
             ListOfBins.append(deepcopy(Bin))
             BinCounter += 1
             CurrentBin = ListOfBins[BinCounter]

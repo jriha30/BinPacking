@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy, copy
 
 class Item:
     def __init__(self, l, w, h, ItemNumber=0, BinNumber=0):
@@ -80,24 +80,26 @@ class Item:
         for l in range(1, height):
             self.CurrentCoords.append([i,j,k+l])
     
-    def GetAllValues(self, bin):
+    def GetAllValues(self, BinList):
         self.ListOfValues = []
-        for i in range(bin.length):
-            for j in range(bin.width):
-                for k in range(bin.height):
-                    for RotationValue in range(6):
-                        temp = []
-                        temp.append([j,k,i])
-                        temp.append(RotationValue)
-                        self.Rotate(RotationValue)
-                        self.GetCoords(j,k,i)
-                        temp.append(self.CurrentCoords)
-                        temp.append(bin.IsValidLocation(self.CurrentCoords))
-                        self.ListOfValues.append(deepcopy(temp))
+        for bin in BinList:
+            for i in range(bin.length):
+                for j in range(bin.width):
+                    for k in range(bin.height):
+                        for RotationValue in range(6):
+                            temp = []
+                            temp.append([i,j,k])
+                            temp.append(RotationValue)
+                            self.Rotate(RotationValue)
+                            self.GetCoords(i,j,k)
+                            temp.append(self.CurrentCoords)
+                            temp.append(bin.IsValidLocation(self.CurrentCoords))
+                            temp.append(bin)
+                            self.ListOfValues.append(temp)
 
     def ChooseLocation(self):
         for location in self.ListOfValues:
             if(location[3]):
                 self.CurrentCoords = location[2]
-                return True
-        return False
+                return True, location
+        return False, location
