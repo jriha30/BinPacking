@@ -7,6 +7,8 @@ import Functions
 Value = 3
 
 def main():
+    # Functions.ExampleDisplay()
+
     Functions.DoScenario(Value)
 
 main()

@@ -15,9 +15,11 @@ def GenerateRandomBin(Length=10, Width=10, Height=10):
 def CreateContainer(Length, Width, Height):
     return Bin.Bin(Length, Width, Height)
 
-def CloseBin(bin):
-    print("\nBin number " + str(bin.BinNumber) + " is closed")
-    print("Space Remaining in bin: " + str(bin.SpaceAvailable) + "\n")
+def OpenNewBin(bin):
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
+    print("Bin number " + str(bin.BinNumber) + " is now open")
+    print("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
+
 
 def EndingLog(Bin, ListOfBins, ItemList):
     print("\n!!!!!!!!!!!!!!!!!!!!!!!!  " + "FINAL REPORT" + "  !!!!!!!!!!!!!!!!!!!!!!!!")
@@ -81,6 +83,7 @@ def GetValue(Value, Size, ItemNumber):
 def DescribeListOfItems(ListOfItems):
     for item in ListOfItems:
         item.Describe()
+    print()
 
 def DoScenario(Value, Size=10, ItemNumber=30):
     Bin, ListOfItems = GetValue(Value, Size, ItemNumber)
@@ -90,23 +93,28 @@ def DoScenario(Value, Size=10, ItemNumber=30):
     ListOfBins = []
     ListOfBins.append(deepcopy(Bin))
 
-    # ListOfBins.append(deepcopy(Bin))
-
     BinCounter = 0
     CurrentBin = ListOfBins[BinCounter]
-    CurrentBin.BinNumber = BinCounter
+    CurrentBin.BinNumber = BinCounter + 1
     i = 0
     while(i < len(ListOfItems)):
         ListOfItems[i].GetAllValues(ListOfBins)
-        # Logging(ListOfItems[i], CurrentBin)
+        Logging(ListOfItems[i], CurrentBin)
         Boolean, location = ListOfItems[i].ChooseLocation()
         if(Boolean):
             location[4].PlaceItem(ListOfItems[i])
             i += 1
         else:
-            # CloseBin(CurrentBin)
             ListOfBins.append(deepcopy(Bin))
             BinCounter += 1
             CurrentBin = ListOfBins[BinCounter]
-            CurrentBin.BinNumber = BinCounter
+            CurrentBin.BinNumber = BinCounter + 1
+            OpenNewBin(CurrentBin)
     EndingLog(Bin, ListOfBins, ListOfItems)
+
+def ExampleDisplay():
+    NormalBin = Bin.Bin(12,9,6)
+    SmallBin = Bin.Bin(3,3,3)
+
+    NormalBin.DisplayVolume()
+    SmallBin.DisplayVolume()

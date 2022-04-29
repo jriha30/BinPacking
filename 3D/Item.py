@@ -1,5 +1,3 @@
-from copy import deepcopy, copy
-
 class Item:
     def __init__(self, l, w, h, ItemNumber=0, BinNumber=0):
         self.ItemNumber = ItemNumber
@@ -16,7 +14,6 @@ class Item:
     
     def Describe(self):
         print("Dimensions of Item " + str(self.ItemNumber) + ": " + str(self.length) + " x " + str(self.width) + " x " + str(self.height) + " = " + str(self.volume))
-
 
     def DisplayAllValues(self):
         for value in self.ListOfValues:
